@@ -10,15 +10,13 @@ bool Arguments::ParseArguments(int argc, char* argv[])
     try
     {
         CheckArgCount(argc);
-        FillRawArguments(argv);
-        inputFile = std::filesystem::path(rawArguments.inputFile);
-        CheckInputFile();
-        outputFile = std::filesystem::path(rawArguments.outputFile);
-        CheckAndInitHeaderArgumnet();
+        inputFile = std::filesystem::path(argv[1]);
+        outputFile = std::filesystem::path(argv[2]);
+        CheckAndInitHeaderArgument(std::string(argv[3]));
     }
     catch (const std::runtime_error& err)
     {
-        std::cout << "ERROR: " << err.what() << std::endl
+        std::cerr << "ERROR: " << err.what() << std::endl
             << "usage: mrl irregular_lattice_file regular_lattice_file {header|no_header}" << std::endl;
         return false;
     }
@@ -49,28 +47,13 @@ void Arguments::CheckArgCount(int argc)
     }
 }
 
-void Arguments::FillRawArguments(char* argv[])
+void Arguments::CheckAndInitHeaderArgument(const std::string& rawHeaderArgument)
 {
-    rawArguments.inputFile = std::string(argv[1]);
-    rawArguments.outputFile = std::string(argv[2]);
-    rawArguments.header = std::string(argv[3]);
-}
-
-void Arguments::CheckInputFile()
-{
-    if (!std::filesystem::exists(inputFile))
-    {
-        throw std::runtime_error("input file \"" + inputFile.string() + std::string("\" doesn't exist"));
-    }
-}
-
-void Arguments::CheckAndInitHeaderArgumnet()
-{
-    if (rawArguments.header == "header")
+    if (rawHeaderArgument == "header")
     {
         header = true;
     }
-    else if (rawArguments.header == "no_header")
+    else if (rawHeaderArgument == "no_header")
     {
         header = false;
     }

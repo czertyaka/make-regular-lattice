@@ -12,15 +12,7 @@ public:
     bool IsHeader();
 private:
     void CheckArgCount(int argc);
-    void FillRawArguments(char* argv[]);
-    void CheckInputFile();
-    void CheckAndInitHeaderArgumnet();
-    struct
-    {
-        std::string inputFile;
-        std::string outputFile;
-        std::string header;
-    } rawArguments;
+    void CheckAndInitHeaderArgument(const std::string& rawHeaderArgument);
     std::filesystem::path inputFile;
     std::filesystem::path outputFile;
     bool header;
