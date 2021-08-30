@@ -2,6 +2,8 @@
 #include <utility>
 #include <filesystem>
 
+#define ARG_COUNT 4
+
 static std::filesystem::path irregularLatticeFile;
 static std::filesystem::path regularLatticeFile;
 static bool header;
@@ -37,7 +39,7 @@ bool parse_arguments(const int argc, char* argv[])
 
 void do_parse_arguments(const int argc, char* argv[])
 {
-    if (argc != 4)
+    if (argc != ARG_COUNT)
     {
         throw std::runtime_error("invalid arguments number");
     }
