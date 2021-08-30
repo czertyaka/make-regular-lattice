@@ -13,6 +13,29 @@ int main(int argc, char* argv[])
         return -1;
     }
 
+    using namespace io;
+
+    try
+    {
+        CSVReader<3, trim_chars<>, no_quote_escape<';'>> reader(args.GetInputFile().string());
+        if (args.IsHeader())
+        {
+            reader.read_header(io::ignore_extra_column, "x", "y", "dose");
+        }
+        else
+        {
+            reader.set_header("x", "y", "dose");
+        }
+    }
+    catch (const error::base& err)
+    {
+        std::cerr << "ERROR: " << err.what() << std::endl;
+    }
+    catch (...)
+    {
+        std::cerr << "ERROR: unknown error occured" << std::endl;
+    }
+
     return 0;
 }
 
