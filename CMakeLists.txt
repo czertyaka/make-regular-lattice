@@ -32,7 +32,7 @@ set(TEST_DIR "${CMAKE_SOURCE_DIR}/../test")
 add_test(invalid_input_file mrl.exe "${TEST_DIR}/irregular_lattice.csv.invalid" 3 4)
 set_tests_properties(
     invalid_input_file PROPERTIES
-    PASS_REGULAR_EXPRESSION "input file .* doesn't exist"
+    PASS_REGULAR_EXPRESSION "input file \"${TEST_DIR}/irregular_lattice.csv.invalid\" doesn't exist"
 )
 
 add_test(invalid_last_arg mrl.exe "${TEST_DIR}/irregular_lattice.csv" 3 iNvAlIdArGuMeNt)
@@ -51,4 +51,10 @@ add_test(good_one_no_header mrl.exe "${TEST_DIR}/irregular_lattice.csv" "${TEST_
 set_tests_properties(
     good_one_no_header PROPERTIES
     FAIL_REGULAR_EXPRESSION "ERROR"
+)
+
+add_test(check_output mrl.exe "${TEST_DIR}/irregular_lattice.csv" "${TEST_DIR}/regulat_lattice.csv" header)
+set_tests_properties(
+    check_output PROPERTIES
+    PASS_REGULAR_EXPRESSION "regular lattice written to ${TEST_DIR}/regulat_lattice.csv"
 )
