@@ -28,45 +28,49 @@ set_tests_properties(
 )
 
 set(TEST_DIR "${CMAKE_SOURCE_DIR}/../test")
+set(INPUT "${TEST_DIR}/irregular_lattice.csv")
+set(INPUT_INVALID "${TEST_DIR}/irregular_lattice.csv.invalid")
+set(INPUT_NO_HEADER "${TEST_DIR}/irregular_lattice_no_header.csv")
+set(OUTPUT "${TEST_DIR}/regular_lattice.csv")
 
-add_test(invalid_input_file mrl.exe "${TEST_DIR}/irregular_lattice.csv.invalid" 3 header)
+add_test(invalid_input_file mrl.exe ${INPUT_INVALID} 3 header)
 set_tests_properties(
     invalid_input_file PROPERTIES
-    PASS_REGULAR_EXPRESSION "input file \"${TEST_DIR}/irregular_lattice.csv.invalid\" doesn't exist"
+    PASS_REGULAR_EXPRESSION "input file \"${INPUT_INVALID}\" doesn't exist"
 )
 
-add_test(invalid_last_arg mrl.exe "${TEST_DIR}/irregular_lattice.csv" 3 iNvAlIdArGuMeNt)
+add_test(invalid_last_arg mrl.exe ${INPUT} ${OUTPUT} iNvAlIdArGuMeNt)
 set_tests_properties(
     invalid_last_arg PROPERTIES
     PASS_REGULAR_EXPRESSION "third argument should be \"header\" or \"no_header\""
 )
 
-add_test(good_one_header mrl.exe "${TEST_DIR}/irregular_lattice.csv" "${TEST_DIR}/output" header)
+add_test(good_one_header mrl.exe ${INPUT} ${OUTPUT} header)
 set_tests_properties(
     good_one_header PROPERTIES
     FAIL_REGULAR_EXPRESSION "ERROR"
 )
 
-add_test(good_one_no_header mrl.exe "${TEST_DIR}/irregular_lattice.csv" "${TEST_DIR}/output" no_header)
+add_test(good_one_no_header mrl.exe ${INPUT_NO_HEADER} ${OUTPUT} no_header)
 set_tests_properties(
     good_one_no_header PROPERTIES
     FAIL_REGULAR_EXPRESSION "ERROR"
 )
 
-add_test(missing_header mrl.exe "${TEST_DIR}/irregular_lattice_no_header.csv" "${TEST_DIR}/regular_lattice.csv" header)
+add_test(missing_header mrl.exe ${INPUT_NO_HEADER} ${OUTPUT} header)
 set_tests_properties(
     missing_header PROPERTIES
-    PASS_REGULAR_EXPRESSION "Missing column \"x\" in header of file \"${TEST_DIR}/irregular_lattice_no_header.csv\"."
+    PASS_REGULAR_EXPRESSION "Missing column \"x\" in header of file \"${INPUT_NO_HEADER}\"."
 )
 
-add_test(no_missing_header mrl.exe "${TEST_DIR}/irregular_lattice_no_header.csv" "${TEST_DIR}/regular_lattice.csv" no_header)
+add_test(no_missing_header mrl.exe "${INPUT_NO_HEADER}" "${OUTPUT}" no_header)
 set_tests_properties(
     no_missing_header PROPERTIES
-    FAIL_REGULAR_EXPRESSION "Missing column \"x\" in header of file \"${TEST_DIR}/irregular_lattice_no_header.csv\"."
+    FAIL_REGULAR_EXPRESSION "Missing column \"x\" in header of file \"${INPUT_NO_HEADER}\"."
 )
 
-add_test(check_output mrl.exe "${TEST_DIR}/irregular_lattice.csv" "${TEST_DIR}/regular_lattice.csv" header)
+add_test(check_output mrl.exe ${INPUT} ${OUTPUT} header)
 set_tests_properties(
     check_output PROPERTIES
-    PASS_REGULAR_EXPRESSION "regular lattice written to ${TEST_DIR}/regular_lattice.csv"
+    PASS_REGULAR_EXPRESSION "regular lattice written to ${OUTPUT}"
 )
