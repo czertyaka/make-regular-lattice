@@ -41,13 +41,13 @@ set_tests_properties(
     PASS_REGULAR_EXPRESSION "third argument should be \"header\" or \"no_header\""
 )
 
-add_test(good_one_header mrl.exe "${TEST_DIR}/irregular_lattice.csv" 3 header)
+add_test(good_one_header mrl.exe "${TEST_DIR}/irregular_lattice.csv" "${TEST_DIR}/output" header)
 set_tests_properties(
     good_one_header PROPERTIES
     FAIL_REGULAR_EXPRESSION "ERROR"
 )
 
-add_test(good_one_no_header mrl.exe "${TEST_DIR}/irregular_lattice.csv" 3 no_header)
+add_test(good_one_no_header mrl.exe "${TEST_DIR}/irregular_lattice.csv" "${TEST_DIR}/output" no_header)
 set_tests_properties(
     good_one_no_header PROPERTIES
     FAIL_REGULAR_EXPRESSION "ERROR"
