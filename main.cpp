@@ -1,5 +1,4 @@
-#include <iostream>
-
+#include "log.hpp"
 #include "arguments.hpp"
 #include "fast-cpp-csv-parser/csv.h"
 
@@ -29,11 +28,7 @@ int main(int argc, char* argv[])
     }
     catch (const error::base& err)
     {
-        std::cerr << "ERROR: " << err.what() << std::endl;
-    }
-    catch (...)
-    {
-        std::cerr << "ERROR: unknown error occured" << std::endl;
+        ERROR(err.what());
     }
 
     return 0;
@@ -43,7 +38,7 @@ bool check_if_input_file_exists(const std::filesystem::path& inputFile)
 {
     if (!std::filesystem::exists(inputFile))
     {
-        std::cerr << "ERROR: input file \"" << inputFile.string() << "\" doesn't exist" << std::endl;
+        ERROR("input file \"" << inputFile.string() << "\" doesn't exist");
         return false;
     }
 

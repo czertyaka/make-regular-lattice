@@ -1,6 +1,6 @@
-#include <iostream>
 #include <utility>
 
+#include "log.hpp"
 #include "arguments.hpp"
 
 #define EXPECTED_ARG_COUNT 3
@@ -16,8 +16,8 @@ bool Arguments::ParseArguments(int argc, char* argv[])
     }
     catch (const std::runtime_error& err)
     {
-        std::cerr << "ERROR: " << err.what() << std::endl
-            << "usage: mrl irregular_lattice_file regular_lattice_file {header|no_header}" << std::endl;
+        ERROR(err.what());
+        INFO("usage is as follows\n\tmrl irregular_lattice_file regular_lattice_file {header|no_header}");
         return false;
     }
 
