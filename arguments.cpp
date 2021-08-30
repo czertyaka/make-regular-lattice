@@ -17,7 +17,6 @@ bool Arguments::ParseArguments(int argc, char* argv[])
     catch (const std::runtime_error& err)
     {
         ERROR(err.what());
-        INFO("usage is as follows\n\tmrl irregular_lattice_file regular_lattice_file {header|no_header}");
         return false;
     }
 
