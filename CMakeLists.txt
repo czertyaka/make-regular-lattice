@@ -53,6 +53,12 @@ set_tests_properties(
     FAIL_REGULAR_EXPRESSION "ERROR"
 )
 
+add_test(missing_header mrl.exe "${TEST_DIR}/irregular_lattice_no_header.csv" "${TEST_DIR}/regular_lattice.csv" header)
+set_tests_properties(
+    missing_header PROPERTIES
+    PASS_REGULAR_EXPRESSION "header weren't found in ${TEST_DIR}/irregular_lattice_no_header.csv"
+)
+
 add_test(check_output mrl.exe "${TEST_DIR}/irregular_lattice.csv" "${TEST_DIR}/regular_lattice.csv" header)
 set_tests_properties(
     check_output PROPERTIES
