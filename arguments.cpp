@@ -26,6 +26,21 @@ bool Arguments::ParseArguments(int argc, char* argv[])
     return true;
 }
 
+const std::filesystem::path& Arguments::GetInputFile()
+{
+    return inputFile;
+}
+
+const std::filesystem::path& Arguments::GetOutputFile()
+{
+    return outputFile;
+}
+
+bool Arguments::IsHeader()
+{
+    return header;
+}
+
 void Arguments::CheckArgCount(int argc)
 {
     if ((argc-1) != EXPECTED_ARG_COUNT)
