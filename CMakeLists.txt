@@ -59,6 +59,12 @@ set_tests_properties(
     PASS_REGULAR_EXPRESSION "Missing column \"x\" in header of file \"${TEST_DIR}/irregular_lattice_no_header.csv\"."
 )
 
+add_test(no_missing_header mrl.exe "${TEST_DIR}/irregular_lattice_no_header.csv" "${TEST_DIR}/regular_lattice.csv" no_header)
+set_tests_properties(
+    no_missing_header PROPERTIES
+    FAIL_REGULAR_EXPRESSION "Missing column \"x\" in header of file \"${TEST_DIR}/irregular_lattice_no_header.csv\"."
+)
+
 add_test(check_output mrl.exe "${TEST_DIR}/irregular_lattice.csv" "${TEST_DIR}/regular_lattice.csv" header)
 set_tests_properties(
     check_output PROPERTIES
