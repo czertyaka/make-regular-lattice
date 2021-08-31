@@ -41,22 +41,10 @@ set_tests_properties(
     PASS_REGULAR_EXPRESSION "input file \"${INPUT_INVALID}\" doesn't exist"
 )
 
-add_test(invalid_last_arg mrl.exe ${INPUT} ${OUTPUT} iNvAlIdArGuMeNt)
+add_test(invalid_header_arg mrl.exe ${INPUT} ${OUTPUT} iNvAlIdArGuMeNt)
 set_tests_properties(
-    invalid_last_arg PROPERTIES
+    invalid_header_arg PROPERTIES
     PASS_REGULAR_EXPRESSION "third argument should be \"header\" or \"no_header\""
-)
-
-add_test(good_one_header mrl.exe ${INPUT} ${OUTPUT} header)
-set_tests_properties(
-    good_one_header PROPERTIES
-    FAIL_REGULAR_EXPRESSION "ERROR"
-)
-
-add_test(good_one_no_header mrl.exe ${INPUT_NO_HEADER} ${OUTPUT} no_header)
-set_tests_properties(
-    good_one_no_header PROPERTIES
-    FAIL_REGULAR_EXPRESSION "ERROR"
 )
 
 add_test(missing_header mrl.exe ${INPUT_NO_HEADER} ${OUTPUT} header)
@@ -69,6 +57,18 @@ add_test(no_missing_header mrl.exe "${INPUT_NO_HEADER}" "${OUTPUT}" no_header)
 set_tests_properties(
     no_missing_header PROPERTIES
     FAIL_REGULAR_EXPRESSION "Missing column \"x\" in header of file \"${INPUT_NO_HEADER}\"."
+)
+
+add_test(no_errors_header mrl.exe ${INPUT} ${OUTPUT} header)
+set_tests_properties(
+    no_errors_header PROPERTIES
+    FAIL_REGULAR_EXPRESSION "ERROR"
+)
+
+add_test(no_errors_no_header mrl.exe ${INPUT_NO_HEADER} ${OUTPUT} no_header)
+set_tests_properties(
+    no_errors_no_header PROPERTIES
+    FAIL_REGULAR_EXPRESSION "ERROR"
 )
 
 add_test(check_output mrl.exe ${INPUT} ${OUTPUT} header)
