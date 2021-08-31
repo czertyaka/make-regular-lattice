@@ -7,6 +7,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SRC_DIR "${CMAKE_SOURCE_DIR}/src")
 
+include_directories("${CMAKE_SOURCE_DIR}/fast-cpp-csv-parser")
+include_directories("${CMAKE_SOURCE_DIR}/mba/mba")
+
 add_executable(mrl "${SRC_DIR}/main.cpp" "${SRC_DIR}/arguments.cpp")
 
 enable_testing()

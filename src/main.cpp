@@ -1,6 +1,6 @@
 #include "log.hpp"
 #include "arguments.hpp"
-#include "../fast-cpp-csv-parser/csv.h"
+#include "csv.h"
 
 bool check_if_input_file_exists(const std::filesystem::path& inputFile);
 
