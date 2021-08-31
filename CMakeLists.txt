@@ -5,7 +5,9 @@ project(mrl)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(mrl main.cpp arguments.cpp)
+set(SRC_DIR "${CMAKE_SOURCE_DIR}/src")
+
+add_executable(mrl "${SRC_DIR}/main.cpp" "${SRC_DIR}/arguments.cpp")
 
 enable_testing()
 
@@ -27,7 +29,7 @@ set_tests_properties(
     PASS_REGULAR_EXPRESSION "invalid arguments number"
 )
 
-set(TEST_DIR "${CMAKE_SOURCE_DIR}/../test")
+set(TEST_DIR "${CMAKE_SOURCE_DIR}/test")
 set(INPUT "${TEST_DIR}/irregular_lattice.csv")
 set(INPUT_INVALID "${TEST_DIR}/irregular_lattice.csv.invalid")
 set(INPUT_NO_HEADER "${TEST_DIR}/irregular_lattice_no_header.csv")
