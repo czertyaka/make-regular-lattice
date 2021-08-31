@@ -1,6 +1,9 @@
 #include "log.hpp"
 #include "arguments.hpp"
 #include "csv.h"
+#include "mba.hpp"
+
+#include <array>
 
 bool check_if_input_file_exists(const std::filesystem::path& inputFile);
 
@@ -19,7 +22,6 @@ int main(int argc, char* argv[])
     }
 
     using namespace io;
-
     try
     {
         CSVReader<3, trim_chars<>, no_quote_escape<';'>> reader(args.GetInputFile().string());
@@ -31,11 +33,15 @@ int main(int argc, char* argv[])
         {
             reader.set_header("x", "y", "dose");
         }
-        int x, y;
+        double x, y;
         double dose;
+        std::vector<mba::point<2>> coordinates;
+        std::vector<double> doses;
         while(reader.read_row(x, y, dose))
         {
-
+            coordinates.push_back({x, y});
+            doses.push_back(dose);
+            INFO("x = " << x << ", y = " << y << ", dose = " << dose);
         }
     }
     catch (const error::base& err)
