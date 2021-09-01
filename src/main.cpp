@@ -1,7 +1,6 @@
 #include "log.hpp"
 #include "arguments.hpp"
-#include "mba.hpp"
-#include "maker.hpp"
+#include "data.hpp"
 
 #include <array>
 
@@ -17,6 +16,10 @@ int main(int argc, char* argv[])
     IrregularData irregularData(args);
     irregularData.Read();
     irregularData.AddCornerNodes();
+
+    RegularData regularData(args);
+    regularData.Make(irregularData);
+    regularData.Write();
 
     return 0;
 }

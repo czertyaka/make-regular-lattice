@@ -1,9 +1,10 @@
-#include "maker.hpp"
+#include "data.hpp"
 #include "log.hpp"
 #include "csv.h"
 
 #include <utility>
 #include <algorithm>
+#include <array>
 
 #define AREA_LENGTH 60000 // meters
 #define AREA_HALF_LENGTH AREA_LENGTH/2
@@ -38,8 +39,8 @@ bool IrregularData::Read()
         LOG_DEBUG("reading input file " << source.string());
         while(reader.read_row(x, y, dose))
         {
-            data.coordinates.push_back({x, y});
-            data.doses.push_back(dose);
+            coordinates.push_back({x, y});
+            doses.push_back(dose);
             LOG_DEBUG("x = " << x << ", y = " << y << ", dose = " << dose);
         }
 
@@ -68,42 +69,42 @@ void IrregularData::AddCornerNodes()
 
     for (t_coordinates::const_iterator node = cornerNodes.cbegin(); node != cornerNodes.cend(); ++node)
     {
-        if (std::find(data.coordinates.begin(), data.coordinates.end(), *node) != data.coordinates.end());
+        if (std::find(coordinates.begin(), coordinates.end(), *node) != coordinates.end());
         {
             LOG_DEBUG("adding corner node to input data x = " << node->at(0) << ", y = " << node->at(1));
-            data.coordinates.push_back(*node);
-            data.doses.push_back(0);
+            coordinates.push_back(*node);
+            doses.push_back(0);
         }
     }
 }
 
-DataRegularMaker::DataRegularMaker(const Arguments& args) :
-    args(args)
+RegularData::RegularData(const Arguments& args) :
+    outputFile(args.GetOutputFile())
 {
-    MakeRegularCoordinates();
+    MakeCoordinates();
 }
 
-bool DataRegularMaker::MakeRegularData()
-{
-    return false;
-}
-
-bool DataRegularMaker::WriteRegularData()
+bool RegularData::Make(const Data& irregularData)
 {
     return false;
 }
 
-void DataRegularMaker::MakeRegularCoordinates()
+bool RegularData::Write()
+{
+    return false;
+}
+
+void RegularData::MakeCoordinates()
 {
     constexpr size_t regularNodesNumber = AREA_LENGTH / STEP_LENGTH + 1;
-    regularData.coordinates.reserve(regularNodesNumber * regularNodesNumber);
+    coordinates.reserve(regularNodesNumber * regularNodesNumber);
 
     LOG_DEBUG("making regular coordinates");
-    for (int x = -AREA_LENGTH/2; x <= AREA_LENGTH/2; x += STEP_LENGTH)
+    for (int x = -AREA_HALF_LENGTH; x <= AREA_HALF_LENGTH; x += STEP_LENGTH)
     {
-        for (int y = AREA_LENGTH/2; y >= -AREA_LENGTH/2; y -= STEP_LENGTH)
+        for (int y = AREA_HALF_LENGTH; y >= -AREA_HALF_LENGTH; y -= STEP_LENGTH)
         {
-            regularData.coordinates.push_back({static_cast<double>(x), static_cast<double>(y)});
+            coordinates.push_back({static_cast<double>(x), static_cast<double>(y)});
             LOG_DEBUG("x = " << x << ", y = " << y);
         }
     }
