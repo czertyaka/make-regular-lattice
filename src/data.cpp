@@ -5,6 +5,7 @@
 #include <utility>
 #include <algorithm>
 #include <array>
+#include <filesystem>
 
 #define AREA_LENGTH 60000 // meters
 #define AREA_HALF_LENGTH AREA_LENGTH/2
@@ -12,9 +13,24 @@
 
 void check_if_input_file_exists(const std::filesystem::path& inputFile);
 
+const t_doses& Data::Doses()
+{
+    return doses;
+}
+
+const t_coordinates& Data::Coordinates()
+{
+    return coordinates;
+}
+
 IrregularData::IrregularData(const Arguments& args) :
     source(args.GetInputFile()),
     isHeader(args.IsHeader())
+{}
+
+IrregularData::IrregularData(const std::filesystem::path& source, const bool isHeader) :
+    source(source),
+    isHeader(isHeader)
 {}
 
 bool IrregularData::Read()
@@ -81,6 +97,12 @@ void IrregularData::AddCornerNodes()
 
 RegularData::RegularData(const Arguments& args) :
     outputFile(args.GetOutputFile())
+{
+    MakeCoordinates();
+}
+
+RegularData::RegularData(const std::filesystem::path& outputFile) :
+    outputFile(outputFile)
 {
     MakeCoordinates();
 }

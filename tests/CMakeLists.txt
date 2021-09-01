@@ -101,9 +101,19 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 include_directories(${SRC_DIR})
+include_directories(${MBA_DIR})
+include_directories(${CSV_DIR})
 
-add_executable(gtests gtests.cc)
+add_executable(gtests gtests.cc "${SRC_DIR}/data.cpp" "${SRC_DIR}/arguments.cpp")
 target_link_libraries(gtests gtest_main)
+
+set(ZERO_PLAIN_INPUT "${TESTS_DIR}/zero-plain.csv")
+set(INCLINED_PLAIN_INPUT "${TESTS_DIR}/inclined-plain.csv")
+target_compile_definitions(gtests PRIVATE
+    OUTPUT="${OUTPUT}"
+    ZERO_PLAIN_INPUT="${ZERO_PLAIN_INPUT}"
+    INCLINED_PLAIN_INPUT="${INCLINED_PLAIN_INPUT}"
+)
 
 include(GoogleTest)
 gtest_discover_tests(gtests)

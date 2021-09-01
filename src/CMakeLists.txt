@@ -1,5 +1,5 @@
-include_directories("${CMAKE_SOURCE_DIR}/fast-cpp-csv-parser")
-include_directories("${CMAKE_SOURCE_DIR}/mba/mba")
+include_directories("${CSV_DIR}")
+include_directories("${MBA_DIR}")
 
 add_executable(mrl main.cpp arguments.cpp data.cpp)
 
