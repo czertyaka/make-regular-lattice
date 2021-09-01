@@ -35,15 +35,16 @@ bool IrregularData::Read()
             reader.set_header("x", "y", "dose");
         }
 
-        double x, y, dose;
+        double x, y;
+        double dose;
         LOG_DEBUG("reading input file " << source.string());
         while(reader.read_row(x, y, dose))
         {
             coordinates.push_back({x, y});
             doses.push_back(dose);
-            LOG_DEBUG("x = " << x << ", y = " << y << ", dose = " << dose);
         }
 
+        LOG_DEBUG(coordinates.size() << " values were successfully read");
         return true;
     }
     catch (const io::error::base& err)
@@ -69,7 +70,7 @@ void IrregularData::AddCornerNodes()
 
     for (t_coordinates::const_iterator node = cornerNodes.cbegin(); node != cornerNodes.cend(); ++node)
     {
-        if (std::find(coordinates.begin(), coordinates.end(), *node) != coordinates.end());
+        if (std::find(coordinates.cbegin(), coordinates.cend(), *node) == coordinates.cend())
         {
             LOG_DEBUG("adding corner node to input data x = " << node->at(0) << ", y = " << node->at(1));
             coordinates.push_back(*node);
@@ -99,13 +100,11 @@ void RegularData::MakeCoordinates()
     constexpr size_t regularNodesNumber = AREA_LENGTH / STEP_LENGTH + 1;
     coordinates.reserve(regularNodesNumber * regularNodesNumber);
 
-    LOG_DEBUG("making regular coordinates");
     for (int x = -AREA_HALF_LENGTH; x <= AREA_HALF_LENGTH; x += STEP_LENGTH)
     {
         for (int y = AREA_HALF_LENGTH; y >= -AREA_HALF_LENGTH; y -= STEP_LENGTH)
         {
             coordinates.push_back({static_cast<double>(x), static_cast<double>(y)});
-            LOG_DEBUG("x = " << x << ", y = " << y);
         }
     }
 }

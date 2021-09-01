@@ -1,16 +1,18 @@
 #include "mba.hpp"
 #include "arguments.hpp"
+#include "log.hpp"
 
 #include <vector>
 
-typedef std::vector<mba::point<2>> t_coordinates;
+typedef mba::point<2> t_point;
+typedef std::vector<t_point> t_coordinates;
 typedef std::vector<double> t_doses;
 
 class Data
 {
 protected:
-	t_coordinates coordinates;
-	std::vector<double> doses;
+    t_coordinates coordinates;
+    std::vector<double> doses;
 };
 
 class IrregularData : public Data
@@ -27,23 +29,23 @@ private:
 class RegularData : public Data
 {
 public:
-	RegularData(const Arguments& args);
-	bool Make(const Data& irregularData);
-	bool Write();
+    RegularData(const Arguments& args);
+    bool Make(const Data& irregularData);
+    bool Write();
 private:
-	void MakeCoordinates();
-	const std::filesystem::path& outputFile;
+    void MakeCoordinates();
+    const std::filesystem::path& outputFile;
 };
 
 class DataRegularMaker
 {
 public:
-	DataRegularMaker(const Arguments& args);
-	bool MakeRegularData();
-	bool WriteRegularData();
+    DataRegularMaker(const Arguments& args);
+    bool MakeRegularData();
+    bool WriteRegularData();
 private:
-	void MakeRegularCoordinates();
-	Data irregularData;
-	Data regularData;
-	const Arguments& args;
+    void MakeRegularCoordinates();
+    Data irregularData;
+    Data regularData;
+    const Arguments& args;
 };

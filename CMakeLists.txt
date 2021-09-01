@@ -46,6 +46,8 @@ set(TEST_DIR "${CMAKE_SOURCE_DIR}/test")
 set(INPUT "${TEST_DIR}/irregular_lattice.csv")
 set(INPUT_INVALID "${TEST_DIR}/irregular_lattice.csv.invalid")
 set(INPUT_NO_HEADER "${TEST_DIR}/irregular_lattice_no_header.csv")
+set(INPUT_WITH_CORNERS "${TEST_DIR}/irregular_data_with_corners.csv")
+set(INPUT_THREE_CORNERS "${TEST_DIR}/irregular_data_three_corners.csv")
 set(OUTPUT "${TEST_DIR}/regular_lattice.csv")
 
 add_test(invalid_input_file ${APP_CMD} ${INPUT_INVALID} 3 header)
@@ -70,6 +72,24 @@ add_test(no_missing_header ${APP_CMD} "${INPUT_NO_HEADER}" "${OUTPUT}" no_header
 set_tests_properties(
     no_missing_header PROPERTIES
     FAIL_REGULAR_EXPRESSION "Missing column \"x\" in header of file \"${INPUT_NO_HEADER}\"."
+)
+
+add_test(no_adding_corners ${APP_CMD} "${INPUT_WITH_CORNERS}" "${OUTPUT}" header)
+set_tests_properties(
+    no_adding_corners PROPERTIES
+    FAIL_REGULAR_EXPRESSION "adding corner node"
+)
+
+add_test(adding_corners ${APP_CMD} "${INPUT}" "${OUTPUT}" header)
+set_tests_properties(
+    adding_corners PROPERTIES
+    PASS_REGULAR_EXPRESSION "adding corner node"
+)
+
+add_test(adding_one_corner ${APP_CMD} "${INPUT_THREE_CORNERS}" "${OUTPUT}" header)
+set_tests_properties(
+    adding_one_corner PROPERTIES
+    PASS_REGULAR_EXPRESSION "adding corner node to input data x = -30000, y = -30000"
 )
 
 add_test(no_errors_header ${APP_CMD} ${INPUT} ${OUTPUT} header)
