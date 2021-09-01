@@ -2,6 +2,7 @@
 #include "arguments.hpp"
 #include "csv.h"
 #include "mba.hpp"
+#include "data.hpp"
 
 #include <array>
 
@@ -20,6 +21,8 @@ int main(int argc, char* argv[])
     {
         return -1;
     }
+
+    DataRegularMaker maker(args);
 
     using namespace io;
     try
