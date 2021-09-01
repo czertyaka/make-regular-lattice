@@ -23,17 +23,17 @@ bool Arguments::ParseArguments(int argc, char* argv[])
     return true;
 }
 
-const std::filesystem::path& Arguments::GetInputFile()
+const std::filesystem::path& Arguments::GetInputFile() const
 {
     return inputFile;
 }
 
-const std::filesystem::path& Arguments::GetOutputFile()
+const std::filesystem::path& Arguments::GetOutputFile() const
 {
     return outputFile;
 }
 
-bool Arguments::IsHeader()
+bool Arguments::IsHeader() const
 {
     return header;
 }

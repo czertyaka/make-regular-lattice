@@ -14,6 +14,7 @@ class DataRegularMaker
 public:
 	DataRegularMaker(const Arguments& args);
 	bool ReadIrregularData();
+	bool MakeRegularData();
 	bool WriteRegularData();
 private:
 	void MakeRegularCoordinates();
