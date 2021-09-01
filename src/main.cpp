@@ -1,7 +1,7 @@
 #include "log.hpp"
 #include "arguments.hpp"
 #include "mba.hpp"
-#include "data.hpp"
+#include "maker.hpp"
 
 #include <array>
 
@@ -16,6 +16,8 @@ int main(int argc, char* argv[])
 
     DataRegularMaker maker(args);
     maker.ReadIrregularData();
+    maker.MakeRegularData();
+    maker.WriteRegularData();
 
     return 0;
 }

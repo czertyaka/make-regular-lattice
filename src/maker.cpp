@@ -1,4 +1,4 @@
-#include "data.hpp"
+#include "maker.hpp"
 #include "log.hpp"
 #include "csv.h"
 
@@ -52,6 +52,11 @@ bool DataRegularMaker::ReadIrregularData()
         LOG_ERROR(err.what());
     }
 
+    return false;
+}
+
+bool DataRegularMaker::MakeRegularData()
+{
     return false;
 }
 
