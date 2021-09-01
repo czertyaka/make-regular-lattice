@@ -16,6 +16,7 @@ int main(int argc, char* argv[])
 
     IrregularData irregularData(args);
     irregularData.Read();
+    irregularData.AddCornerNodes();
 
     return 0;
 }

@@ -3,9 +3,11 @@
 
 #include <vector>
 
+typedef std::vector<mba::point<2>> t_coordinates;
+
 typedef struct _data
 {
-	std::vector<mba::point<2>> coordinates;
+	t_coordinates coordinates;
 	std::vector<double> doses;
 } t_data;
 

@@ -3,8 +3,10 @@
 #include "csv.h"
 
 #include <utility>
+#include <algorithm>
 
 #define AREA_LENGTH 60000 // meters
+#define AREA_HALF_LENGTH AREA_LENGTH/2
 #define STEP_LENGTH 1000 // meters
 
 void check_if_input_file_exists(const std::filesystem::path& inputFile);
@@ -33,6 +35,7 @@ bool IrregularData::Read()
         }
 
         double x, y, dose;
+        LOG_DEBUG("reading input file " << source.string());
         while(reader.read_row(x, y, dose))
         {
             data.coordinates.push_back({x, y});
@@ -52,6 +55,26 @@ bool IrregularData::Read()
     }
 
     return false;
+}
+
+void IrregularData::AddCornerNodes()
+{
+    t_coordinates cornerNodes = {
+        {-AREA_HALF_LENGTH, AREA_HALF_LENGTH},
+        {AREA_HALF_LENGTH, AREA_HALF_LENGTH},
+        {-AREA_HALF_LENGTH, -AREA_HALF_LENGTH},
+        {AREA_HALF_LENGTH, -AREA_HALF_LENGTH}
+    };
+
+    for (t_coordinates::const_iterator node = cornerNodes.cbegin(); node != cornerNodes.cend(); ++node)
+    {
+        if (std::find(data.coordinates.begin(), data.coordinates.end(), *node) != data.coordinates.end());
+        {
+            LOG_DEBUG("adding corner node to input data x = " << node->at(0) << ", y = " << node->at(1));
+            data.coordinates.push_back(*node);
+            data.doses.push_back(0);
+        }
+    }
 }
 
 DataRegularMaker::DataRegularMaker(const Arguments& args) :
