@@ -16,7 +16,7 @@ bool Arguments::ParseArguments(int argc, char* argv[])
     }
     catch (const std::runtime_error& err)
     {
-        ERROR(err.what());
+        LOG_ERROR(err.what());
         return false;
     }
 

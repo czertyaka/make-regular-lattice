@@ -12,7 +12,7 @@ int main(int argc, char* argv[])
     Arguments args;
     if (!args.ParseArguments(argc, argv))
     {
-        INFO("usage is as follows\n\tmrl irregular_lattice_file regular_lattice_file {header|no_header}");
+        LOG_INFO("usage is as follows\n\tmrl irregular_lattice_file regular_lattice_file {header|no_header}");
         return -1;
     }
 
@@ -41,12 +41,12 @@ int main(int argc, char* argv[])
         {
             coordinates.push_back({x, y});
             doses.push_back(dose);
-            INFO("x = " << x << ", y = " << y << ", dose = " << dose);
+            LOG_DEBUG("x = " << x << ", y = " << y << ", dose = " << dose);
         }
     }
     catch (const error::base& err)
     {
-        ERROR(err.what());
+        LOG_ERROR(err.what());
     }
 
     return 0;
@@ -56,7 +56,7 @@ bool check_if_input_file_exists(const std::filesystem::path& inputFile)
 {
     if (!std::filesystem::exists(inputFile))
     {
-        ERROR("ERROR: input file \"" << inputFile.string() << "\" doesn't exist");
+        LOG_ERROR("input file \"" << inputFile.string() << "\" doesn't exist");
         return false;
     }
 
