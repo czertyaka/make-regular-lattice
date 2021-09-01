@@ -9,11 +9,22 @@ typedef struct _data
 	std::vector<double> doses;
 } t_data;
 
+class IrregularData
+{
+public:
+    IrregularData(const Arguments& args);
+    bool Read();
+    void AddCornerNodes();
+private:
+    const std::filesystem::path& source;
+    bool isHeader;
+    t_data data;
+};
+
 class DataRegularMaker
 {
 public:
 	DataRegularMaker(const Arguments& args);
-	bool ReadIrregularData();
 	bool MakeRegularData();
 	bool WriteRegularData();
 private:

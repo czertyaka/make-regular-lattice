@@ -9,22 +9,21 @@
 
 void check_if_input_file_exists(const std::filesystem::path& inputFile);
 
-DataRegularMaker::DataRegularMaker(const Arguments& args) :
-    args(args)
-{
-    MakeRegularCoordinates();
-}
+IrregularData::IrregularData(const Arguments& args) :
+    source(args.GetInputFile()),
+    isHeader(args.IsHeader())
+{}
 
-bool DataRegularMaker::ReadIrregularData()
+bool IrregularData::Read()
 {
     try
     {
-        check_if_input_file_exists(args.GetInputFile());
+        check_if_input_file_exists(source);
 
         using namespace io;
-        CSVReader<3, trim_chars<>, no_quote_escape<';'>> reader(args.GetInputFile().string());
+        CSVReader<3, trim_chars<>, no_quote_escape<';'>> reader(source.string());
 
-        if (args.IsHeader())
+        if (isHeader)
         {
             reader.read_header(io::ignore_extra_column, "x", "y", "dose");
         }
@@ -36,8 +35,8 @@ bool DataRegularMaker::ReadIrregularData()
         double x, y, dose;
         while(reader.read_row(x, y, dose))
         {
-            irregularData.coordinates.push_back({x, y});
-            irregularData.doses.push_back(dose);
+            data.coordinates.push_back({x, y});
+            data.doses.push_back(dose);
             LOG_DEBUG("x = " << x << ", y = " << y << ", dose = " << dose);
         }
 
@@ -53,6 +52,12 @@ bool DataRegularMaker::ReadIrregularData()
     }
 
     return false;
+}
+
+DataRegularMaker::DataRegularMaker(const Arguments& args) :
+    args(args)
+{
+    MakeRegularCoordinates();
 }
 
 bool DataRegularMaker::MakeRegularData()

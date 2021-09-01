@@ -14,10 +14,8 @@ int main(int argc, char* argv[])
         return -1;
     }
 
-    DataRegularMaker maker(args);
-    maker.ReadIrregularData();
-    maker.MakeRegularData();
-    maker.WriteRegularData();
+    IrregularData irregularData(args);
+    irregularData.Read();
 
     return 0;
 }
