@@ -5,7 +5,7 @@
 
 #define EXPECTED_ARG_COUNT 3
 
-bool Arguments::ParseArguments(int argc, char* argv[])
+bool Arguments::Parse(int argc, char* argv[])
 {
     try
     {

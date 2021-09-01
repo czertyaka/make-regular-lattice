@@ -6,7 +6,7 @@
 class Arguments
 {
 public:
-    bool ParseArguments(int argc, char* argv[]);
+    bool Parse(int argc, char* argv[]);
     const std::filesystem::path& GetInputFile() const;
     const std::filesystem::path& GetOutputFile() const;
     bool IsHeader() const;
