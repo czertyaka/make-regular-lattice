@@ -14,7 +14,7 @@
 #define GRID_SIZE AREA_LENGTH/STEP_LENGTH+1
 #define MBA_GRID_SIZE 10
 
-void check_if_input_file_exists(const std::filesystem::path& inputFile);
+void check_if_file_exists(const std::filesystem::path& inputFile);
 
 const t_doses& Data::Doses() const
 {
@@ -40,7 +40,7 @@ bool IrregularData::Read()
 {
     try
     {
-        check_if_input_file_exists(source);
+        check_if_file_exists(source);
 
         using namespace io;
         CSVReader<3, trim_chars<>, no_quote_escape<';'>> reader(source.string());
@@ -195,10 +195,10 @@ void RegularData::MakeCoordinates()
     }
 }
 
-void check_if_input_file_exists(const std::filesystem::path& inputFile)
+void check_if_file_exists(const std::filesystem::path& inputFile)
 {
     if (!std::filesystem::exists(inputFile))
     {
-        throw std::runtime_error(std::string("input file \"") + inputFile.string() + "\" doesn't exist");
+        throw std::runtime_error(std::string("file \"") + inputFile.string() + "\" doesn't exist");
     }
 }
