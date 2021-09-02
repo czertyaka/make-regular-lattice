@@ -14,12 +14,17 @@ int main(int argc, char* argv[])
     }
 
     IrregularData irregularData(args);
-    irregularData.Read();
+    if (!irregularData.Read())
+    {
+        return -1;
+    }
     irregularData.AddCornerNodes();
 
     RegularData regularData(args);
-    regularData.Make(irregularData);
-    regularData.Write();
+    if (!regularData.Make(irregularData) || !regularData.Write())
+    {
+        return -1;
+    }
 
     return 0;
 }

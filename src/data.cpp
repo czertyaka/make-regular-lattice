@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <array>
 #include <filesystem>
+#include <fstream>
 
 #define AREA_LENGTH 60000 // meters
 #define AREA_HALF_LENGTH AREA_LENGTH/2
@@ -114,11 +115,41 @@ RegularData::RegularData(const std::filesystem::path& outputFile) :
 
 bool RegularData::Make(const Data& irregularData)
 {
-    return false;
+    doses.resize(coordinates.size(), 0);
+    return true;
 }
 
 bool RegularData::Write()
 {
+    try
+    {
+        std::ofstream of(outputFile.string());
+        if (!of.good())
+        {
+            throw std::runtime_error("error writin to output file " + outputFile.string());
+        }
+        of << "x;y;dose";
+        for (size_t i = 0; i < coordinates.size(); ++i)
+        {
+            of << std::endl << coordinates.at(i).at(0) << ';' << coordinates.at(i).at(1)
+                << ';' << doses.at(i);
+        }
+        of.close();
+        LOG_INFO("regular lattice written to " << outputFile.string());
+        return true;
+    }
+    catch (const std::runtime_error& err)
+    {
+        LOG_ERROR(err.what());
+    }
+    catch (const std::exception& err)
+    {
+        LOG_ERROR(err.what());
+    }
+    catch (...)
+    {
+        LOG_ERROR("unknown error while writing to " << outputFile.string());
+    }
     return false;
 }
 
@@ -127,9 +158,9 @@ void RegularData::MakeCoordinates()
     constexpr size_t regularNodesNumber = AREA_LENGTH / STEP_LENGTH + 1;
     coordinates.reserve(regularNodesNumber * regularNodesNumber);
 
-    for (int x = -AREA_HALF_LENGTH; x <= AREA_HALF_LENGTH; x += STEP_LENGTH)
+    for (int y = AREA_HALF_LENGTH; y >= -AREA_HALF_LENGTH; y -= STEP_LENGTH)
     {
-        for (int y = AREA_HALF_LENGTH; y >= -AREA_HALF_LENGTH; y -= STEP_LENGTH)
+        for (int x = -AREA_HALF_LENGTH; x <= AREA_HALF_LENGTH; x += STEP_LENGTH)
         {
             coordinates.push_back({static_cast<double>(x), static_cast<double>(y)});
         }

@@ -1,5 +1,13 @@
 set(APP_CMD $<TARGET_FILE:mrl>)
 
+set(INPUT "${TESTS_DIR}/irregular_lattice.csv")
+set(INPUT_INVALID "${TESTS_DIR}/irregular_lattice.csv.invalid")
+set(INPUT_NO_HEADER "${TESTS_DIR}/irregular_lattice_no_header.csv")
+set(INPUT_WITH_CORNERS "${TESTS_DIR}/irregular_data_with_corners.csv")
+set(INPUT_THREE_CORNERS "${TESTS_DIR}/irregular_data_three_corners.csv")
+set(EMPTY_INPUT "${TESTS_DIR}/empty.csv")
+set(OUTPUT "${TESTS_DIR}/regular_lattice.csv")
+
 add_test(NAME no_args COMMAND ${APP_CMD})
 set_tests_properties(
     no_args PROPERTIES
@@ -18,15 +26,7 @@ set_tests_properties(
     PASS_REGULAR_EXPRESSION "invalid arguments number"
 )
 
-set(INPUT "${TESTS_DIR}/irregular_lattice.csv")
-set(INPUT_INVALID "${TESTS_DIR}/irregular_lattice.csv.invalid")
-set(INPUT_NO_HEADER "${TESTS_DIR}/irregular_lattice_no_header.csv")
-set(INPUT_WITH_CORNERS "${TESTS_DIR}/irregular_data_with_corners.csv")
-set(INPUT_THREE_CORNERS "${TESTS_DIR}/irregular_data_three_corners.csv")
-set(EMPTY_INPUT "${TESTS_DIR}/empty.csv")
-set(OUTPUT "${TESTS_DIR}/regular_lattice.csv")
-
-add_test(NAME invalid_input_file COMMAND ${APP_CMD} ${INPUT_INVALID} 3 header)
+add_test(NAME invalid_input_file COMMAND ${APP_CMD} ${INPUT_INVALID} ${OUTPUT} header)
 set_tests_properties(
     invalid_input_file PROPERTIES
     PASS_REGULAR_EXPRESSION "input file \"${INPUT_INVALID}\" doesn't exist"
