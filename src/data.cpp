@@ -60,6 +60,11 @@ bool IrregularData::Read()
             doses.push_back(dose);
         }
 
+        if (coordinates.size() == 0)
+        {
+            LOG_WARNING("empty input file " << source.string());
+        }
+
         LOG_DEBUG(coordinates.size() << " values were successfully read");
         return true;
     }
