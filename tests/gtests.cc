@@ -2,7 +2,6 @@
 #include <array>
 
 #include "data.hpp"
-#include "arguments.hpp"
 
 TEST(regular_data_make_test, zero_plain)
 {
