@@ -11,8 +11,8 @@ typedef std::vector<double> t_doses;
 class Data
 {
 public:
-    const t_doses& Doses();
-    const t_coordinates& Coordinates();
+    const t_doses& Doses() const;
+    const t_coordinates& Coordinates() const;
 protected:
     t_coordinates coordinates;
     t_doses doses;

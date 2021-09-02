@@ -12,7 +12,7 @@ TEST(regular_data_make_test, zero_plain)
     ASSERT_TRUE(irregularData.Read());
     irregularData.AddCornerNodes();
 
-    const std::filesystem::path output(OUTPUT);
+    const std::filesystem::path output(OUTPUT"_zero_plain");
     RegularData regularData(output);
 
     ASSERT_TRUE(regularData.Make(irregularData));
@@ -32,7 +32,7 @@ TEST(regular_data_make_test, inclined_plain)
     ASSERT_TRUE(irregularData.Read());
     irregularData.AddCornerNodes();
 
-    const std::filesystem::path output(OUTPUT);
+    const std::filesystem::path output(OUTPUT"_inclined_plain");
     RegularData regularData(output);
 
     ASSERT_TRUE(regularData.Make(irregularData));
@@ -42,5 +42,5 @@ TEST(regular_data_make_test, inclined_plain)
         regularData.Coordinates().cend(), t_point({0, 0}));
     ASSERT_NE(centerNode, regularData.Coordinates().cend());
     size_t centerIndex = std::distance(regularData.Coordinates().cbegin(), centerNode);
-    ASSERT_EQ(regularData.Doses().at(centerIndex), 1);
+    ASSERT_EQ(regularData.Doses().at(centerIndex), 2);
 }

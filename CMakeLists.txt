@@ -10,6 +10,8 @@ set(TESTS_DIR "${CMAKE_SOURCE_DIR}/tests")
 set(MBA_DIR "${CMAKE_SOURCE_DIR}/mba/mba")
 set(CSV_DIR "${CMAKE_SOURCE_DIR}/fast-cpp-csv-parser")
 
+set(CMAKE_BUILD_TYPE Debug)
+
 add_subdirectory(${SRC_DIR})
 
 enable_testing()

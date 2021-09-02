@@ -11,15 +11,16 @@
 #define AREA_LENGTH 60000 // meters
 #define AREA_HALF_LENGTH AREA_LENGTH/2
 #define STEP_LENGTH 1000 // meters
+#define MBA_GRID_SIZE 10
 
 void check_if_input_file_exists(const std::filesystem::path& inputFile);
 
-const t_doses& Data::Doses()
+const t_doses& Data::Doses() const
 {
     return doses;
 }
 
-const t_coordinates& Data::Coordinates()
+const t_coordinates& Data::Coordinates() const
 {
     return coordinates;
 }
@@ -115,8 +116,35 @@ RegularData::RegularData(const std::filesystem::path& outputFile) :
 
 bool RegularData::Make(const Data& irregularData)
 {
-    doses.resize(coordinates.size(), 0);
-    return true;
+    try
+    {
+        doses.resize(coordinates.size(), 0);
+
+        using namespace mba;
+
+        point<2> lowerCorner = {-AREA_HALF_LENGTH, -AREA_HALF_LENGTH};
+        point<2> higherCorner = {AREA_HALF_LENGTH, AREA_HALF_LENGTH};
+
+        mba::index<2> grid = {MBA_GRID_SIZE, MBA_GRID_SIZE};
+
+        t_coordinates irregularCoordinates(irregularData.Coordinates());
+        t_doses irregularDoses(irregularData.Doses());
+
+        MBA<2> interp(lowerCorner, higherCorner, grid, irregularCoordinates, irregularDoses);
+
+        for (size_t i = 0; i < coordinates.size(); ++i)
+        {
+            doses.at(i) = interp(coordinates.at(i));
+        }
+
+        return true;
+    }
+    catch (...)
+    {
+        LOG_ERROR("unknown error while making regular lattice");
+    }
+
+    return false;
 }
 
 bool RegularData::Write()
