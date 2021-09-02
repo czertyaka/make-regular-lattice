@@ -11,6 +11,7 @@
 #define AREA_LENGTH 60000 // meters
 #define AREA_HALF_LENGTH AREA_LENGTH/2
 #define STEP_LENGTH 1000 // meters
+#define GRID_SIZE AREA_LENGTH/STEP_LENGTH+1
 #define MBA_GRID_SIZE 10
 
 void check_if_input_file_exists(const std::filesystem::path& inputFile);
@@ -183,8 +184,7 @@ bool RegularData::Write()
 
 void RegularData::MakeCoordinates()
 {
-    constexpr size_t regularNodesNumber = AREA_LENGTH / STEP_LENGTH + 1;
-    coordinates.reserve(regularNodesNumber * regularNodesNumber);
+    coordinates.reserve(GRID_SIZE * GRID_SIZE);
 
     for (int y = AREA_HALF_LENGTH; y >= -AREA_HALF_LENGTH; y -= STEP_LENGTH)
     {
