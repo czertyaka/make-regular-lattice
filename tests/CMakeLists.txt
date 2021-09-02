@@ -29,7 +29,7 @@ set_tests_properties(
 add_test(NAME invalid_input_file COMMAND ${APP_CMD} ${INPUT_INVALID} "${OUTPUT}_invalid_input_file" header)
 set_tests_properties(
     invalid_input_file PROPERTIES
-    PASS_REGULAR_EXPRESSION "input file \"${INPUT_INVALID}\" doesn't exist"
+    PASS_REGULAR_EXPRESSION "file \"${INPUT_INVALID}\" doesn't exist"
 )
 
 add_test(NAME invalid_header_arg COMMAND ${APP_CMD} ${INPUT} "${OUTPUT}_invalid_header_arg" iNvAlIdArGuMeNt)
@@ -48,24 +48,6 @@ add_test(NAME no_missing_header COMMAND ${APP_CMD} "${INPUT_NO_HEADER}" "${OUTPU
 set_tests_properties(
     no_missing_header PROPERTIES
     FAIL_REGULAR_EXPRESSION "Missing column \"x\" in header of file \"${INPUT_NO_HEADER}\"."
-)
-
-add_test(NAME no_adding_corners COMMAND ${APP_CMD} "${INPUT_WITH_CORNERS}" "${OUTPUT}_no_adding_corners" header)
-set_tests_properties(
-    no_adding_corners PROPERTIES
-    FAIL_REGULAR_EXPRESSION "adding corner node"
-)
-
-add_test(NAME adding_corners COMMAND ${APP_CMD} "${INPUT}" "${OUTPUT}_adding_corners" header)
-set_tests_properties(
-    adding_corners PROPERTIES
-    PASS_REGULAR_EXPRESSION "adding corner node"
-)
-
-add_test(NAME adding_one_corner COMMAND ${APP_CMD} "${INPUT_THREE_CORNERS}" "${OUTPUT}_adding_one_corner" header)
-set_tests_properties(
-    adding_one_corner PROPERTIES
-    PASS_REGULAR_EXPRESSION "adding corner node to input data x = -30000, y = -30000"
 )
 
 add_test(NAME no_errors_header COMMAND ${APP_CMD} ${INPUT} "${OUTPUT}_no_errors_header" header)

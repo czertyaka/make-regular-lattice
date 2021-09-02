@@ -83,26 +83,6 @@ bool IrregularData::Read()
     return false;
 }
 
-void IrregularData::AddCornerNodes()
-{
-    t_coordinates cornerNodes = {
-        {-AREA_HALF_LENGTH, AREA_HALF_LENGTH},
-        {AREA_HALF_LENGTH, AREA_HALF_LENGTH},
-        {-AREA_HALF_LENGTH, -AREA_HALF_LENGTH},
-        {AREA_HALF_LENGTH, -AREA_HALF_LENGTH}
-    };
-
-    for (t_coordinates::const_iterator node = cornerNodes.cbegin(); node != cornerNodes.cend(); ++node)
-    {
-        if (std::find(coordinates.cbegin(), coordinates.cend(), *node) == coordinates.cend())
-        {
-            LOG_DEBUG("adding corner node to input data x = " << node->at(0) << ", y = " << node->at(1));
-            coordinates.push_back(*node);
-            doses.push_back(0);
-        }
-    }
-}
-
 RegularData::RegularData(const Arguments& args) :
     outputFile(args.GetOutputFile())
 {

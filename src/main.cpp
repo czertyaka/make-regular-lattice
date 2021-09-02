@@ -19,7 +19,6 @@ int main(int argc, char* argv[])
     {
         return -1;
     }
-    irregularData.AddCornerNodes();
 
     RegularData regularData(args);
     if (!regularData.Make(irregularData) || !regularData.Write())

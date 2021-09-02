@@ -10,7 +10,6 @@ TEST(regular_data_make_test, zero_plain)
     IrregularData irregularData(zeroPlainFile, true);
 
     ASSERT_TRUE(irregularData.Read());
-    irregularData.AddCornerNodes();
 
     const std::filesystem::path output(OUTPUT"_zero_plain");
     RegularData regularData(output);
@@ -30,7 +29,6 @@ TEST(regular_data_make_test, inclined_plain)
     IrregularData irregularData(input, true);
 
     ASSERT_TRUE(irregularData.Read());
-    irregularData.AddCornerNodes();
 
     const std::filesystem::path output(OUTPUT"_inclined_plain");
     RegularData regularData(output);

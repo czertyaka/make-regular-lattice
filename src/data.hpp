@@ -24,7 +24,6 @@ public:
     IrregularData(const Arguments& args);
     IrregularData(const std::filesystem::path& source, const bool isHeader);
     bool Read();
-    void AddCornerNodes();
 private:
     const std::filesystem::path& source;
     const bool isHeader;
