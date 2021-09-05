@@ -166,9 +166,9 @@ void RegularData::MakeCoordinates()
 {
     coordinates.reserve(GRID_SIZE * GRID_SIZE);
 
-    for (int y = AREA_HALF_LENGTH; y >= -AREA_HALF_LENGTH; y -= STEP_LENGTH)
+    for (int x = -AREA_HALF_LENGTH; x <= AREA_HALF_LENGTH; x += STEP_LENGTH)
     {
-        for (int x = -AREA_HALF_LENGTH; x <= AREA_HALF_LENGTH; x += STEP_LENGTH)
+        for (int y = AREA_HALF_LENGTH; y >= -AREA_HALF_LENGTH; y -= STEP_LENGTH)
         {
             coordinates.push_back({static_cast<double>(x), static_cast<double>(y)});
         }
