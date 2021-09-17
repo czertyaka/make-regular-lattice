@@ -115,7 +115,16 @@ bool RegularData::Make(const Data& irregularData)
 
         for (size_t i = 0; i < coordinates.size(); ++i)
         {
-            doses.at(i) = interp(coordinates.at(i));
+            try
+            {
+                doses.at(i) = interp(coordinates.at(i));
+            }
+            catch(const std::out_of_range& ex)
+            {
+                doses.at(i) = i > 0 ? doses.at(i-1) : 0;
+                LOG_WARNING("error while interpolating dose for point " << coordinates.at(i)[0] << " "
+                    << coordinates.at(i)[1] << ", assigning previuos value " << doses.at(i));
+            }
         }
 
         return true;
