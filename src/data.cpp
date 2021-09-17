@@ -8,7 +8,7 @@
 #include <filesystem>
 #include <fstream>
 
-#define AREA_LENGTH 60000 // meters
+#define AREA_LENGTH 62000 // meters
 #define AREA_HALF_LENGTH AREA_LENGTH/2
 #define STEP_LENGTH 1000 // meters
 #define GRID_SIZE AREA_LENGTH/STEP_LENGTH+1
