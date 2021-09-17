@@ -1,6 +1,8 @@
 include_directories("${CSV_DIR}")
 include_directories("${MBA_DIR}")
 
+set(CMAKE_BUILD_TYPE Debug)
+
 add_executable(mrl main.cpp arguments.cpp data.cpp)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
